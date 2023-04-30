@@ -7,13 +7,14 @@ app = Flask(__name__)
 def getTweets():
     queries = request.args.getlist("query")
     tweets = fetchTweets(queries)
-    tweets_list = []
-    for tweet in tweets:
-        tweets_list.append({
+    tweets_list = [
+        {
             'tweet': tweet.tweet,
             'username': tweet.username,
-            'timestamp': tweet.datetime
-        })
+            'timestamp': tweet.datetime,
+        }
+        for tweet in tweets
+    ]
     return jsonify(tweets_list)
 
 def fetchTweets(queries):
